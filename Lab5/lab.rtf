@@ -1,0 +1,97 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fswiss\fcharset0 ArialMT;\f1\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue255;\red214\green225\blue231;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid1\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\sa320
+
+\f0\b\fs48 \cf0 225 Lab Exercise 4: C++ Template Classes\
+\pard\pardeftab720\sa120
+
+\b0\fs24 \cf0 \
+\pard\pardeftab720\sa280
+
+\b\fs36 \cf0 Creating a Template\
+\pard\pardeftab720\sa240
+
+\b0\fs24 \cf0 C++ allows a programmer to create 
+\b templates 
+\b0 for functions and classes. These are definitions which can be instantiated, at compile time, with different types in the variable and function definitions. Using templates allows a programmer to create one definition of a class, which can then be used to create different instances which store or use data of different types. For example, you can create a template stack class, which can be instantiated as a stack of ints, a stack of strings, or even a stack of stacks. If you've been reading the textbook, you have probably seen them being used several times. The C++ Standard Template Library is a collection of templates, including template classes for many of the ADTs studied in this course. It is described briefly on page 45 of the course text.\
+In this exercise you will convert a seqence class, which stores a sequence of int values (and is implemented with a simple linked list), to a template sequence class which can be instantiated to instances of different types. Thus, with the class, you can create sequences of ints, sequences of doubles, etc. You will then write a small program to demonstrate the class.\
+Begin by downloading the files {\field{\*\fldinst{HYPERLINK "http://www.cs.sfu.ca/~mitchell/cmpt-225/2015-Spring/labs/5-templates/Seq.h"}}{\fldrslt \cf2 Seq.h}}, {\field{\*\fldinst{HYPERLINK "http://www.cs.sfu.ca/~mitchell/cmpt-225/2015-Spring/labs/5-templates/Seq.cpp"}}{\fldrslt \cf2 Seq.cpp}}, {\field{\*\fldinst{HYPERLINK "http://www.cs.sfu.ca/~mitchell/cmpt-225/2015-Spring/labs/5-templates/template_test.cpp"}}{\fldrslt \cf2 template_test.cpp}}, and {\field{\*\fldinst{HYPERLINK "http://www.cs.sfu.ca/~mitchell/cmpt-225/2015-Spring/labs/5-templates/Makefile"}}{\fldrslt \cf2 Makefile}}. (Note that the makefile won't work as is.) You can compile Seq.cpp and template_test.cpp separately (using 
+\b g++ -c
+\b0 ) to create Seq.o and template_test.o, and then link them (with 
+\b g++ -o test Seq.o template_test.o
+\b0 ) to create an executable 
+\b test
+\b0 . You can also add lines to template_test.cpp, to demonstrate further the existing Seq class.\
+Your task is to convert the Seq class to a template class, and then make a version of template_test.cpp that demonstrates that it works.\
+\pard\pardeftab720\sa280
+
+\b\fs28 \cf0 Convert the class to a template class\
+\pard\pardeftab720
+
+\b0\fs24 \cf0 To do this, you must:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720
+\ls1\ilvl0\cf0 {\listtext	1.	}Put the entire class implementation into the Seq.h file. (You need to move the implementations from Seq.cpp to Seq.h);\
+{\listtext	2.	}Change the class definition and each function definition to a template, by prefacing each with the line 
+\b template <typename T>
+\b0 .\
+{\listtext	3.	}Re-write the class qualifier (
+\b Seq::
+\b0 ) that appears before the function name in each function implementation as 
+\b Seq<T>::
+\b0 \
+{\listtext	4.	}Replace all occurrences of 
+\b int
+\b0  in type declarations for variables which are sequence elements to 
+\b T
+\b0 . (There might be some int variable which are not sequence elements, so should not be changed.)\
+\pard\pardeftab720
+\cf0 For example here is the add method before and after these changes:
+\f1\fs32 \cb3 \
+void Seq::add(int x)\{\
+    Node *p = new Node; //temporary node\
+    // Assign appropriate values to the new node\
+    p -> data = x;\
+    p -> next = first;\
+    // Make first point to the new node\
+    first = p;	\
+\}\
+
+\f0\fs24 \cb1 and the "templated" version
+\f1\fs32 \cb3 \
+template <class Type>\
+void Seq<T>::add(T x)\{\
+    Node *p = new Node; //temporary node\
+    // Assign appropriate values to the new node\
+    p -> data = x;\
+    p -> next = first;\
+    // Make first point to the new node\
+    first = p;	\
+\}\
+\pard\pardeftab720\sa280
+
+\f0\b\fs36 \cf0 \cb1 The Test Program\
+\pard\pardeftab720
+
+\b0\fs24 \cf0 To use the Seq template class in a program, when you declare a variable of type Seq, you need specify what type it is to be, for example:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720
+\ls2\ilvl0
+\b \cf0 {\listtext	\'95	}Seq<int>
+\b0  is a sequence of ints, and\
+\ls2\ilvl0
+\b {\listtext	\'95	}Seq<string>
+\b0  is a sequence of strings\
+\pard\pardeftab720\sa240
+\cf0 Modify template_test.cpp to use the Seq template class to make an int sequence, a string sequence, and one other type of sequence. The Makefile should work for compiling the version of template_test which uses the template class. Use output (with cout and the display function) to clearly demonstrate that the class works. The program should use each of the main Seq functions (add, insertAt, remove) at least once on each type, and use the display function (along with other output to the screen to make clear what is being shown) as many times as needed to demonstrate that the functions work. Do not make your test program more complex than is needed to accomplish this, though.\
+When you have done this, submit a .zip file containing your Seq.h, Makefile and template_test.cpp files online. Submit your solution no later than March 13.\
+\pard\pardeftab720
+\cf0 \
+\
+\pard\pardeftab720\sa120
+\cf0 \
+}

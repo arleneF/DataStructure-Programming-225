@@ -1,0 +1,37 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fswiss\fcharset0 ArialMT;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\sa320
+
+\f0\b\fs48 \cf0 225 Lab 4: Deep Copies and Copy Constructors\
+\pard\pardeftab720
+
+\b0\fs24 \cf0 (Adapted from a lab created by John Edgar.)\
+\pard\pardeftab720\sa120
+\cf0 \
+\pard\pardeftab720\sa240
+\cf0 A 
+\b shallow copy
+\b0  of an object is one where only the 
+\b addresses 
+\b0 of data created in dynamic memory have been copied, rather than the data themselves.\'a0 A 
+\b deep copy
+\b0  of an object is one where new dynamic memory has been allocated to hold copies of any dynamically allocated data (rather than just having copies of the pointers to those data).\
+The consequence of creating a shallow copy of an object is that any dynamically created data (i.e., data on the heap) is not actually copied. This means that pointer variables in the copy point to the same data as those in the original, so they are really just aliases for the same object. Since the two objects share the same data, modifying one has the identical effect on the other.\
+We will demonstrate this with the copy constructor for a linked list class. A copy constructor for a class is a constructor that makes a new instance of the class which is a copy of a given one. (Surprising, but true.)\
+Download {\field{\*\fldinst{HYPERLINK "http://www.cs.sfu.ca/~mitchell/cmpt-225/2015-Spring/labs/lab4-files.zip"}}{\fldrslt \cf2 this zip file}}. It contains two implementations of a linked list class (LL1 and LL2), and a test program. (And a make file for building the test program.)\
+The test program creates an LL1 instance, List1, stores some data in it, and prints out its contents. Then it uses the copy constructor to make a new instance, List2, which is a copy of List1. It then modifies List1 and List 2 (in different ways), and displays the results. Because the LL1 copy constructor makes only a shallow copy, the results are not as intended.\
+The test program then carries out the same exercise with two instances of the class LL2, List3 and List4. Because the LL2 copy constructor makes a deep copy, all works as intended.\
+Unfortunately, the person who created the LL2 implementation "forgot" to fix the copy constructor. Your task is to fix it. Begin by studying the existing code carefully. If you're unclear about copy constructors in general, consult your textbook, Wikipedia, or any C++ resource you find works for you. Next, make sure you understand why the test program results are what they are. (Drawing pictures like we do in class might help.) Then start fixing the copy constructor of the LL2 class. The fixed copy constructor has to traverse the list of nodes in the linked list of the instance being copied (if it is not empty, that is), and make a copy of every node. These have to be assembled as a linked list in the new object. If you need help getting started, study the implementations of insertAt() and remove(), which also have to traverse the list. Looking in your textbook, using Google, and asking neighbours is also fine, and possibly useful. Just don't copy any code. Changing anything, in any of the files, except the implementation of the LL2 copy constructor, is not allowed.\
+When your new LL2 copy constructor works, the test program should demonstrate that the LL1 implementation is wrong but the LL2 implementation is right.\
+\pard\pardeftab720\sa280
+
+\b\fs36 \cf0 Grading\
+\pard\pardeftab720
+
+\b0\fs24 \cf0 To collect your lab grade, submit a zip file containing all the lab files, but with your corrected LL2.cpp in place of our incorrect one, to coursys. We will test your submission by running make all and then test.\
+\pard\pardeftab720\sa120
+\cf0 \
+}
