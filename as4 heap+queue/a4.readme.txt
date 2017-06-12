@@ -1,0 +1,10 @@
+//edited by Jianglin Fu(Arlene). student Id: 888  login ID: 888
+
+I used the queue class from assignment2 , and the heap class from assignment 3. 
+
+method:
+first, I cin the list of numbers into a heap l1 and a queue l2.
+
+then, I traced the every element in l1 one by one until l1 is empty. use extractMin to get the minimum element from l1 and search this element in l2, if l2 doesn't contain the element, then store this element into maxVal, what's more, each time when i get an element which l2 does not have, I compare it with the previous value stored in maxVal, and choose the bigger one. 
+
+once I run through out l1, I can get the max element which in l1 but not in l2, otherwise just return wrong.
